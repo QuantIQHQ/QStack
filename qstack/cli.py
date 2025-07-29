@@ -21,6 +21,7 @@ def print_banner():
  ╚══▀▀═╝ ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
 {Style.RESET_ALL}{Fore.WHITE}                                    (c) QuantIQ{Style.RESET_ALL}
 {Fore.MAGENTA}    Modern Fullstack Generator for Vibecoders{Style.RESET_ALL}
+{Fore.BLUE}    🔗 https://github.com/QuantIQHQ/QStack{Style.RESET_ALL}
 """
     click.echo(banner)
 
