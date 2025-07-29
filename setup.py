@@ -11,6 +11,7 @@ setup(
         "jinja2>=3.0.0",
         "colorama>=0.4.4",
         "pyyaml>=6.0",
+        "requests>=2.25.0",
     ],
     entry_points={
         "console_scripts": [

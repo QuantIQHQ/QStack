@@ -4,6 +4,7 @@
 
 ## ✨ What Makes QStack Special
 
+- **🤖 AI-Powered**: Generate projects from natural language with Claude Pro integration
 - **🎯 Vibe-first**: Designed for AI-assisted development with English-readable documentation
 - **⚡ Modern Stack**: React + Vite + Tailwind CSS 4.0 + Django + Docker
 - **🎨 Beautiful CLI**: Stunning ASCII banner and Metasploit-inspired interface
@@ -26,16 +27,26 @@ pip install -e .
 ```
 
 ### Create Your First Project
-```bash
-# Create a fullstack todo app (PostgreSQL by default)
-qstack startproject mytodo
 
-# Navigate and run
+**Traditional Way:**
+```bash
+qstack startproject mytodo
 cd mytodo
 qstack up --build
-
 # Open http://localhost:5173 🎉
 ```
+
+**🤖 AI-Powered Way:**
+```bash
+# Just describe what you want in natural language!
+qstack startproject "a todo app with user auth, categories, and due dates" --ai
+
+cd todo_app_with_user_auth_categories_and_due_dates
+qstack up --build
+# Open http://localhost:5173 🎉
+```
+
+> **Note**: AI mode requires Claude Pro API key. Set `ANTHROPIC_API_KEY` environment variable. [Get your key here](https://console.anthropic.com/)
 
 ## 🎨 CLI Experience
 
@@ -56,7 +67,8 @@ QStack features a beautiful, Metasploit-inspired CLI with stunning ASCII art:
 
 ## 🛠 Commands
 
-### `qstack startproject <name>`
+### `qstack startproject <name>` 
+
 Create a new fullstack project with everything wired:
 - **Frontend**: React + Vite + Tailwind CSS 4.0
 - **Backend**: Django + REST Framework
@@ -64,11 +76,26 @@ Create a new fullstack project with everything wired:
 - **Docker**: Full containerization
 - **Documentation**: AI-readable project scope
 
+**Traditional Usage:**
 ```bash
 qstack startproject myapp --database postgres
 qstack startproject api-only --template api-only --database mysql
 qstack startproject frontend-only --template frontend-only
 ```
+
+**🤖 AI-Powered Usage:**
+```bash
+qstack startproject "a social media app with posts, likes, and comments" --ai
+qstack startproject "an e-commerce store with products and shopping cart" --ai
+qstack startproject "a project management tool with teams and tasks" --ai
+```
+
+**AI Features:**
+- 🧠 Analyzes natural language requirements
+- 🏗️ Generates custom Django models and React components  
+- 📦 Suggests appropriate packages and dependencies
+- 📋 Creates detailed AI analysis documentation
+- 🎯 Smart database selection based on complexity
 
 ### `qstack up`
 Start your QStack application (replaces docker-compose up):
