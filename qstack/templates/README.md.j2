@@ -1,0 +1,173 @@
+# {{ project_name_pascal }}
+
+<div align="center">
+  <img src="frontend/public/assets/quantiq.png" alt="QuantIQ" width="200">
+</div>
+
+A modern fullstack todo application built with QStack by QuantIQ, featuring React, Vite, Tailwind CSS 4.0, Django, and Docker.
+
+## 🚀 Quick Start
+
+1. **Prerequisites**
+   - Docker and Docker Compose
+   - Git (optional)
+
+2. **Run the Application**
+   ```bash
+   docker-compose up --build
+   ```
+
+3. **Access the Application**
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:8000/api/todos/
+   {% if database != 'sqlite' -%}
+   - Database: localhost:{% if database == 'postgres' %}5432{% else %}3306{% endif %}
+   {% endif %}
+
+## 🛠 Development
+
+### Frontend (React + Vite + Tailwind CSS 4.0)
+- Located in `frontend/` directory
+- Hot module replacement enabled
+- Tailwind CSS 4.0 with modern utility classes
+- Proxy API calls to backend
+
+### Backend (Django + REST Framework)
+- Located in `backend/` directory
+- Django REST Framework for API
+- {% if database == 'postgres' %}PostgreSQL{% elif database == 'mysql' %}MySQL{% else %}SQLite{% endif %} database
+- CORS enabled for frontend
+
+### Database
+{% if database == 'postgres' -%}
+- **PostgreSQL 15**
+- Database: `{{ project_name_snake }}_db`
+- User: `{{ project_name_snake }}_user`
+- Access via: `docker-compose exec db psql -U {{ project_name_snake }}_user -d {{ project_name_snake }}_db`
+{% elif database == 'mysql' -%}
+- **MySQL 8**
+- Database: `{{ project_name_snake }}_db`
+- User: `{{ project_name_snake }}_user`
+- Access via: `docker-compose exec db mysql -u {{ project_name_snake }}_user -p {{ project_name_snake }}_db`
+{% else -%}
+- **SQLite**
+- Database file: `backend/db.sqlite3`
+- Lightweight and portable
+{% endif %}
+
+## 📝 Common Commands
+
+### Development
+```bash
+# Start all services
+docker-compose up
+
+# Rebuild and start
+docker-compose up --build
+
+# Run backend migrations
+docker-compose exec backend python manage.py migrate
+
+# Create Django superuser
+docker-compose exec backend python manage.py createsuperuser
+
+# Install new frontend dependencies
+docker-compose exec frontend npm install <package-name>
+
+# View logs
+docker-compose logs frontend
+docker-compose logs backend
+```
+
+### Production
+```bash
+# Build for production
+qstack build --clean
+
+# Generate environment file
+cp .env.example .env
+# Edit .env with production values
+```
+
+## 🎯 Features
+
+- ✅ Todo CRUD operations
+- ✅ Responsive design with Tailwind CSS 4.0
+- ✅ Real-time updates
+- ✅ Docker containerization
+- ✅ Database integration
+- ✅ REST API
+- ✅ Development hot-reload
+
+## 🔧 Customization
+
+### Adding New Features
+1. Update `defineprojectscope.md` with feature description
+2. Use AI tools (Cursor, ChatGPT) to generate code
+3. Test the feature
+4. Update the status in `defineprojectscope.md`
+
+### Changing Database
+{% if database != 'sqlite' -%}
+To switch databases, update `docker-compose.yml` and `backend/{{ project_name_snake }}_project/settings.py`.
+{% else -%}
+To use PostgreSQL or MySQL, update `docker-compose.yml` and `backend/{{ project_name_snake }}_project/settings.py`, then add the database service.
+{% endif %}
+
+### Environment Variables
+Copy `.env.example` to `.env` and customize:
+- `DEBUG`: Development/Production mode
+- `DJANGO_SECRET_KEY`: Django secret key
+{% if database != 'sqlite' -%}
+- `DB_*`: Database connection settings
+{% endif %}
+
+## 📚 Documentation
+
+- **Project Scope**: See `defineprojectscope.md` for features and progress
+- **API Documentation**: Visit http://localhost:8000/api/ for interactive API docs
+- **Frontend Components**: Located in `frontend/src/components/`
+
+## 🚀 Deployment
+
+### Using Docker
+1. Build production images
+2. Set environment variables
+3. Deploy to your hosting platform (DigitalOcean, AWS, etc.)
+
+### Environment Setup
+- Set `DEBUG=False` in production
+- Configure `ALLOWED_HOSTS`
+- Use secure `DJANGO_SECRET_KEY`
+{% if database != 'sqlite' -%}
+- Configure production database credentials
+{% endif %}
+
+## 🤖 AI-Friendly Development
+
+This project is optimized for AI-assisted development:
+
+- **English-first documentation** in `defineprojectscope.md`
+- **Clear project structure** for easy AI navigation
+- **Modern stack** that AI tools understand well
+- **Simple conventions** for consistent code generation
+
+Use tools like Cursor, ChatGPT, or Claude to:
+- Generate new features
+- Debug issues
+- Add tests
+- Optimize performance
+
+---
+
+*Generated with ❤️ by QStack - Powered by QuantIQ Devs*
+
+## 🏢 About QuantIQ
+QuantIQ builds developer tools that make fullstack development faster and more enjoyable. QStack is our flagship tool for vibecoders who want to ship fast with AI assistance.
+
+**Tech Stack Credits:**
+- ⚛️ **React** - A JavaScript library for building user interfaces
+- ⚡ **Vite** - Next generation frontend tooling  
+- 🎨 **Tailwind CSS** - A utility-first CSS framework
+- 🐍 **Django** - The web framework for perfectionists with deadlines
+- 🐳 **Docker** - Containerization platform

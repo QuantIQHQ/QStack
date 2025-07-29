@@ -1,0 +1,17 @@
+setup.py
+qstack/__init__.py
+qstack/cli.py
+qstack.egg-info/PKG-INFO
+qstack.egg-info/SOURCES.txt
+qstack.egg-info/dependency_links.txt
+qstack.egg-info/entry_points.txt
+qstack.egg-info/requires.txt
+qstack.egg-info/top_level.txt
+qstack/commands/__init__.py
+qstack/commands/build.py
+qstack/commands/startproject.py
+qstack/commands/status.py
+qstack/core/__init__.py
+qstack/core/generator.py
+qstack/core/status_parser.py
+qstack/core/template_manager.py

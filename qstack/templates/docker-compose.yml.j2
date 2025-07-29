@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      {% if database == 'postgres' -%}
+      - DB_HOST=db
+      - DB_NAME={{ project_name_snake }}_db
+      - DB_USER={{ project_name_snake }}_user
+      - DB_PASSWORD={{ project_name_snake }}_password
+      - DB_PORT=5432
+      {% elif database == 'mysql' -%}
+      - DB_HOST=db
+      - DB_NAME={{ project_name_snake }}_db
+      - DB_USER={{ project_name_snake }}_user
+      - DB_PASSWORD={{ project_name_snake }}_password
+      - DB_PORT=3306
+      {% endif -%}
+      - DEBUG=True
+      - DJANGO_SECRET_KEY={{ django_secret_key }}
+    depends_on:
+      {% if database != 'sqlite' -%}
+      - db
+      {% endif %}
+
+{% if database == 'postgres' -%}
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB={{ project_name_snake }}_db
+      - POSTGRES_USER={{ project_name_snake }}_user
+      - POSTGRES_PASSWORD={{ project_name_snake }}_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
+{% elif database == 'mysql' -%}
+  db:
+    image: mysql:8
+    environment:
+      - MYSQL_DATABASE={{ project_name_snake }}_db
+      - MYSQL_USER={{ project_name_snake }}_user
+      - MYSQL_PASSWORD={{ project_name_snake }}_password
+      - MYSQL_ROOT_PASSWORD=root_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  mysql_data:
+{% endif %}

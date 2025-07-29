@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - DB_HOST=db
+      - DB_NAME=quantiq_demo_db
+      - DB_USER=quantiq_demo_user
+      - DB_PASSWORD=quantiq_demo_password
+      - DB_PORT=5432
+      - DEBUG=True
+      - DJANGO_SECRET_KEY=WmgEk!Ajd_rEeuT)x6o1_Ek$Z^xw$#$!72F)CvI_fWVjqIfTx5
+    depends_on:
+      - db
+      
+
+db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=quantiq_demo_db
+      - POSTGRES_USER=quantiq_demo_user
+      - POSTGRES_PASSWORD=quantiq_demo_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:

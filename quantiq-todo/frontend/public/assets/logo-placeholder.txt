@@ -1,0 +1,2 @@
+Place quantiq.png logo file here.
+This will be used in the generated project header.

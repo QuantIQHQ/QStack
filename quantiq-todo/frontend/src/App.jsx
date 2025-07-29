@@ -1,0 +1,133 @@
+import { useState, useEffect } from 'react'
+import TodoItem from './components/TodoItem'
+
+function App() {
+  const [todos, setTodos] = useState([])
+  const [newTodo, setNewTodo] = useState('')
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchTodos()
+  }, [])
+
+  const fetchTodos = async () => {
+    try {
+      const response = await fetch('/api/todos/')
+      if (response.ok) {
+        const data = await response.json()
+        setTodos(data)
+      }
+    } catch (error) {
+      console.error('Error fetching todos:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const addTodo = async (e) => {
+    e.preventDefault()
+    if (!newTodo.trim()) return
+
+    try {
+      const response = await fetch('/api/todos/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title: newTodo, completed: false }),
+      })
+
+      if (response.ok) {
+        const todo = await response.json()
+        setTodos([...todos, todo])
+        setNewTodo('')
+      }
+    } catch (error) {
+      console.error('Error adding todo:', error)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-xl text-gray-600">Loading...</div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-100 py-8">
+      <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="px-6 py-4 bg-gradient-to-r from-blue-600 to-purple-600">
+          <div className="flex flex-col items-center space-y-2">
+            <h1 className="text-2xl font-bold text-white text-center">
+              QuantiqTodo Todo
+            </h1>
+            <div className="flex items-center space-x-4 text-white/80 text-sm">
+              <span>Powered by</span>
+              <div className="flex items-center space-x-2">
+                <span className="font-semibold">QuantIQ</span>
+                <span>•</span>
+                <span>React</span>
+                <span>•</span>
+                <span>Vite</span>
+                <span>•</span>
+                <span>Django</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="p-6">
+          <form onSubmit={addTodo} className="mb-6">
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={newTodo}
+                onChange={(e) => setNewTodo(e.target.value)}
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Add a new todo..."
+              />
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                Add
+              </button>
+            </div>
+          </form>
+
+          <div className="space-y-2">
+            {todos.length === 0 ? (
+              <p className="text-gray-500 text-center py-4">
+                No todos yet. Add one above!
+              </p>
+            ) : (
+              todos.map((todo) => (
+                <TodoItem 
+                  key={todo.id} 
+                  todo={todo} 
+                  setTodos={setTodos} 
+                />
+              ))
+            )}
+          </div>
+        </div>
+        
+        <div className="px-6 py-3 bg-gray-50 border-t text-center text-xs text-gray-500">
+          <div className="flex flex-col space-y-1">
+            <span>Built with QStack by QuantIQ Devs</span>
+            <div className="flex justify-center items-center space-x-3">
+              <span>⚛️ React</span>
+              <span>⚡ Vite</span>
+              <span>🐍 Django</span>
+              <span>🐳 Docker</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default App

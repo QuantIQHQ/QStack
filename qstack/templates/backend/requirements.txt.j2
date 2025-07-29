@@ -1,0 +1,19 @@
+# Core Django
+Django==5.0.6
+djangorestframework==3.15.1
+
+# CORS handling for frontend integration
+django-cors-headers==4.3.1
+
+# Database drivers (only install what's needed)
+{% if database == 'postgres' -%}
+psycopg2-binary==2.9.9
+{% elif database == 'mysql' -%}
+mysqlclient==2.2.4
+{% endif -%}
+
+# Production server
+gunicorn==21.2.0
+
+# Environment management
+python-dotenv==1.0.0
