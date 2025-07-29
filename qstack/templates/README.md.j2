@@ -14,7 +14,7 @@ A modern fullstack todo application built with QStack by QuantIQ, featuring Reac
 
 2. **Run the Application**
    ```bash
-   docker-compose up --build
+   qstack up --build
    ```
 
 3. **Access the Application**
@@ -60,10 +60,19 @@ A modern fullstack todo application built with QStack by QuantIQ, featuring Reac
 ### Development
 ```bash
 # Start all services
-docker-compose up
+qstack up
 
 # Rebuild and start
-docker-compose up --build
+qstack up --build
+
+# Stop services
+qstack down
+
+# View logs
+qstack logs
+qstack logs --follow
+qstack logs --service frontend
+qstack logs --service backend
 
 # Run backend migrations
 docker-compose exec backend python manage.py migrate
@@ -73,10 +82,6 @@ docker-compose exec backend python manage.py createsuperuser
 
 # Install new frontend dependencies
 docker-compose exec frontend npm install <package-name>
-
-# View logs
-docker-compose logs frontend
-docker-compose logs backend
 ```
 
 ### Production

@@ -6,7 +6,9 @@
 
 - **🎯 Vibe-first**: Designed for AI-assisted development with English-readable documentation
 - **⚡ Modern Stack**: React + Vite + Tailwind CSS 4.0 + Django + Docker
-- **🐳 Docker Native**: Everything containerized from day one
+- **🎨 Beautiful CLI**: Stunning ASCII banner and Metasploit-inspired interface
+- **🐳 Docker Smart**: Auto-detects `docker compose` vs `docker-compose` for compatibility
+- **🚀 QStack Commands**: Clean command structure - `qstack up`, `qstack build`, `qstack logs`
 - **📊 Database Smart**: PostgreSQL by default, MySQL or SQLite options available
 - **📝 AI-Friendly Docs**: Auto-generated `defineprojectscope.md` for seamless AI context
 - **🔐 Security First**: Auto-generated Django secret keys for each project
@@ -30,10 +32,27 @@ qstack startproject mytodo
 
 # Navigate and run
 cd mytodo
-docker-compose up --build
+qstack up --build
 
 # Open http://localhost:5173 🎉
 ```
+
+## 🎨 CLI Experience
+
+QStack features a beautiful, Metasploit-inspired CLI with stunning ASCII art:
+
+```
+ ██████╗ ███████╗████████╗ █████╗  ██████╗██╗  ██╗
+██╔═══██╗██╔════╝╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝
+██║   ██║███████╗   ██║   ███████║██║     █████╔╝ 
+██║▄▄ ██║╚════██║   ██║   ██╔══██║██║     ██╔═██╗ 
+╚██████╔╝███████║   ██║   ██║  ██║╚██████╗██║  ██╗
+ ╚══▀▀═╝ ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
+                                    (c) QuantIQ
+    Modern Fullstack Generator for Vibecoders
+```
+
+**Smart Docker Detection**: Automatically detects whether your system uses `docker compose` (newer) or `docker-compose` (legacy) and adapts accordingly.
 
 ## 🛠 Commands
 
@@ -51,6 +70,36 @@ qstack startproject api-only --template api-only --database mysql
 qstack startproject frontend-only --template frontend-only
 ```
 
+### `qstack up`
+Start your QStack application (replaces docker-compose up):
+```bash
+qstack up --build          # Start with build
+qstack up --detach         # Run in background
+```
+
+### `qstack down`
+Stop your QStack application (replaces docker-compose down):
+```bash
+qstack down                # Stop application
+qstack down --volumes      # Stop and remove volumes
+```
+
+### `qstack logs`
+View application logs (replaces docker-compose logs):
+```bash
+qstack logs                # View all logs
+qstack logs --follow       # Follow log output
+qstack logs --service frontend  # View specific service logs
+qstack logs --tail 100     # Show last 100 log lines
+```
+
+### `qstack build`
+Prepare for production deployment:
+```bash
+qstack build --clean       # Build and clean dev files
+qstack build --no-cache    # Build without cache
+```
+
 ### `qstack status`
 Track project progress with AI-readable status:
 ```bash
@@ -59,13 +108,6 @@ qstack status
 # ✅ Todo List Display - Implemented
 # ✅ Add New Todo - Implemented
 # ⏳ User Authentication - Pending
-```
-
-### `qstack build`
-Prepare for production deployment:
-```bash
-qstack build --clean
-# Builds Docker images and cleans dev files
 ```
 
 ## 🎯 Perfect For

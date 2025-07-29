@@ -38,8 +38,8 @@ def startproject(project_name, template, database, force):
         click.echo(f"\n{Fore.GREEN}✅ Project '{project_name}' created successfully!{Style.RESET_ALL}")
         click.echo(f"\n{Fore.CYAN}Next steps:{Style.RESET_ALL}")
         click.echo(f"  cd {project_name}")
-        click.echo(f"  docker-compose up --build")
-        click.echo(f"  Open http://localhost:5173")
+        click.echo(f"  qstack up --build")
+        click.echo(f"  Open http://localhost:5173 🎉")
         
     except Exception as e:
         click.echo(f"{Fore.RED}❌ Error creating project: {str(e)}{Style.RESET_ALL}")

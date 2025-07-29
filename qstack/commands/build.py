@@ -1,13 +1,16 @@
 """Build command for production deployment."""
 
 import os
+import subprocess
 import click
 from colorama import Fore, Style
+from ..core.utils import detect_docker_compose
 
 @click.command()
 @click.option('--clean', '-c', is_flag=True, help='Clean development files')
 @click.option('--path', '-p', default='.', help='Path to project directory')
-def build(clean, path):
+@click.option('--no-cache', is_flag=True, help='Build without using cache')
+def build(clean, path, no_cache):
     """Build project for production deployment."""
     
     if not os.path.exists(path):
@@ -22,13 +25,26 @@ def build(clean, path):
         click.echo(f"{Fore.RED}❌ No docker-compose.yml found. Not a QStack project?{Style.RESET_ALL}")
         return
     
+    # Detect docker compose command
+    compose_cmd, is_available = detect_docker_compose()
+    if not is_available:
+        click.echo(f"{Fore.RED}❌ Docker Compose not found. Please install Docker and Docker Compose.{Style.RESET_ALL}")
+        return
+    
     try:
-        # Run docker build
-        import subprocess
+        click.echo(f"📦 Building Docker images using {compose_cmd}...")
         
-        click.echo("📦 Building Docker images...")
+        # Build command based on detected compose version
+        if compose_cmd == 'docker compose':
+            cmd = ['docker', 'compose', 'build']
+        else:
+            cmd = ['docker-compose', 'build']
+            
+        if no_cache:
+            cmd.append('--no-cache')
+        
         result = subprocess.run(
-            ['docker-compose', 'build', '--no-cache'],
+            cmd,
             cwd=path,
             capture_output=True,
             text=True
@@ -59,6 +75,7 @@ def build(clean, path):
         
         click.echo(f"\n{Fore.CYAN}🚀 Ready for deployment!{Style.RESET_ALL}")
         click.echo("Next steps:")
+        click.echo("  • qstack up (to run the application)")
         click.echo("  • Push to your git repository")
         click.echo("  • Deploy to your hosting platform")
         click.echo("  • Update environment variables")
