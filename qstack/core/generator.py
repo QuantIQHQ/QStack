@@ -67,11 +67,15 @@ class ProjectGenerator:
         
         # Generate environment files
         self._generate_env_files(project_path, context)
+        
+        # Generate AI context files
+        self._generate_ai_context(project_path, context)
     
     def _generate_frontend_only(self, project_path, context):
         """Generate frontend-only project."""
         self._generate_react_frontend(project_path, context)
         self._generate_documentation(project_path, context)
+        self._generate_ai_context(project_path, context)
     
     def _generate_api_only(self, project_path, context):
         """Generate API-only project."""
@@ -79,6 +83,7 @@ class ProjectGenerator:
         self._generate_docker_files(project_path, context)
         self._generate_documentation(project_path, context)
         self._generate_env_files(project_path, context)
+        self._generate_ai_context(project_path, context)
     
     def _generate_react_frontend(self, frontend_path, context):
         """Generate React + Vite + Tailwind frontend."""
@@ -102,6 +107,91 @@ class ProjectGenerator:
         """Generate environment files."""
         self._render_template('.env.example.j2', project_path / '.env.example', context)
         self._render_template('.gitignore.j2', project_path / '.gitignore', context)
+    
+    def _generate_ai_context(self, project_path, context):
+        """Generate AI-readable context files."""
+        from datetime import datetime
+        
+        # Add additional context for AI files
+        ai_context = context.copy()
+        ai_context.update({
+            'generation_timestamp': datetime.now().isoformat(),
+            'qstack_version': '0.1.0',
+            'ai_generated': False,  # Will be True for AI-generated projects
+            'original_description': None,
+            'ai_analysis': None,
+            'custom_models': {},
+            'custom_components': {}
+        })
+        
+        # Generate main QStack context file
+        self._render_template('qstack-context.md.j2', project_path / '.qstack-context.md', ai_context)
+        
+        # Generate Cursor IDE context file
+        self._generate_cursor_context(project_path, ai_context)
+    
+    def _generate_cursor_context(self, project_path, context):
+        """Generate Cursor IDE specific context file."""
+        cursor_content = f"""# Cursor AI Context for {context['project_name']}
+
+## Quick Start
+This is a QStack-generated {context['template_type']} application.
+
+### Development Commands
+- `qstack up --build` - Start development environment
+- `qstack logs --follow` - View application logs
+- `qstack status` - Check implementation status
+
+### Key Files
+{self._get_key_files_list(context['template_type'], context['project_name'])}
+
+### Architecture
+- **Type**: {context['template_type']}
+- **Database**: {context['database']}
+- **Generated**: {context['generation_timestamp'][:10]}
+
+### Code Patterns
+{self._get_code_patterns(context['template_type'])}
+
+For full context, see .qstack-context.md
+"""
+        
+        with open(project_path / '.cursor-context', 'w') as f:
+            f.write(cursor_content)
+    
+    def _get_key_files_list(self, template_type, project_name):
+        """Get list of key files based on template type."""
+        project_snake = project_name.replace('-', '_')
+        
+        if template_type == 'fullstack':
+            return f"""- `frontend/src/App.jsx` - Main React application
+- `backend/{project_snake}_project/settings.py` - Django settings
+- `backend/todos/models.py` - Database models
+- `docker-compose.yml` - Container orchestration"""
+        elif template_type == 'frontend-only':
+            return """- `src/App.jsx` - Main React application
+- `package.json` - Dependencies and scripts
+- `vite.config.js` - Build configuration"""
+        else:  # api-only
+            return f"""- `{project_snake}_project/settings.py` - Django settings
+- `todos/models.py` - Database models
+- `todos/views.py` - API endpoints"""
+
+    def _get_code_patterns(self, template_type):
+        """Get code patterns description."""
+        patterns = []
+        
+        if template_type in ['fullstack', 'frontend-only']:
+            patterns.append("- React: Functional components with hooks")
+            patterns.append("- Styling: Tailwind CSS utility classes")
+            patterns.append("- State: useState and useEffect hooks")
+        
+        if template_type in ['fullstack', 'api-only']:
+            patterns.append("- Django: Class-based views with DRF")
+            patterns.append("- Models: Include created_at/updated_at fields")
+            patterns.append("- API: RESTful endpoints with serializers")
+        
+        return '\n'.join(patterns) if patterns else "- Standard project patterns"
     
     def _copy_template(self, template_name, dest_path, context):
         """Copy and render a template directory."""

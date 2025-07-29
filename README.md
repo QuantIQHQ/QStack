@@ -5,13 +5,15 @@
 ## ✨ What Makes QStack Special
 
 - **🤖 AI-Powered**: Generate projects from natural language with Claude Pro integration
+- **🧠 AI-Native Context**: Auto-generated `.qstack-context.md` makes projects instantly readable by any AI tool
 - **🎯 Vibe-first**: Designed for AI-assisted development with English-readable documentation
 - **⚡ Modern Stack**: React + Vite + Tailwind CSS 4.0 + Django + Docker
 - **🎨 Beautiful CLI**: Stunning ASCII banner and Metasploit-inspired interface
 - **🐳 Docker Smart**: Auto-detects `docker compose` vs `docker-compose` for compatibility
 - **🚀 QStack Commands**: Clean command structure - `qstack up`, `qstack build`, `qstack logs`
+- **🤖 AI Integration**: Built-in Cursor IDE support and AI context commands
 - **📊 Database Smart**: PostgreSQL by default, MySQL or SQLite options available
-- **📝 AI-Friendly Docs**: Auto-generated `defineprojectscope.md` for seamless AI context
+- **📝 AI-Friendly Docs**: Auto-generated project documentation for seamless AI understanding
 - **🔐 Security First**: Auto-generated Django secret keys for each project
 
 ## 🚀 Quick Start
@@ -74,7 +76,8 @@ Create a new fullstack project with everything wired:
 - **Backend**: Django + REST Framework
 - **Database**: PostgreSQL (default), MySQL/SQLite options
 - **Docker**: Full containerization
-- **Documentation**: AI-readable project scope
+- **AI Context**: Auto-generated `.qstack-context.md` and `.cursor-context` files
+- **Documentation**: AI-readable project scope and structure
 
 **Traditional Usage:**
 ```bash
@@ -137,6 +140,37 @@ qstack status
 # ⏳ User Authentication - Pending
 ```
 
+## 🧠 AI Context Commands
+
+QStack now includes powerful AI context management for seamless AI tool integration:
+
+### `qstack ai-context`
+Display comprehensive AI-readable project context:
+```bash
+qstack ai-context                    # Show full project context
+qstack ai-context --format=quick    # Show condensed context
+qstack ai-context --format=structure # Show only project structure
+```
+
+### `qstack ai-help`
+Get AI-specific help and available commands:
+```bash
+qstack ai-help                       # Show all AI commands and integration info
+```
+
+### `qstack add-feature <description>`
+AI-guided feature addition to existing projects:
+```bash
+qstack add-feature "user profile with avatar upload"
+qstack add-feature "shopping cart with payment integration" --implement
+```
+
+### `qstack generate-context`
+Regenerate AI context files for current project:
+```bash
+qstack generate-context              # Updates .qstack-context.md and .cursor-context
+```
+
 ## 🎯 Perfect For
 
 ### Vibecoders
@@ -176,39 +210,74 @@ myproject/
 ├── docker-compose.yml    # Full stack orchestration
 ├── README.md            # Setup and usage guide
 ├── defineprojectscope.md # AI-readable project context
+├── .qstack-context.md   # 🧠 Master AI context file
+├── .cursor-context      # 🎯 Cursor IDE integration
+├── AI_ANALYSIS.md       # 🤖 AI generation analysis (if --ai used)
 └── .env.example         # Environment configuration
 ```
 
 ## 🤖 AI-Assisted Development
 
-QStack projects are optimized for AI tools:
+QStack projects are **AI-native** - designed from the ground up for seamless AI tool integration:
+
+### 🧠 Automatic AI Context Generation
+Every QStack project includes comprehensive AI-readable documentation:
+
+**`.qstack-context.md`** - Master AI context file containing:
+- Complete project metadata and architecture
+- Tech stack encoding and database schema
+- All available commands and workflows
+- Code patterns and development guidelines
+- AI-specific instructions and best practices
+
+**`.cursor-context`** - Cursor IDE integration file for instant project understanding
+
+### 🎯 AI Tool Integration
+
+**Cursor IDE**: 
+```bash
+# Open any QStack project in Cursor
+# AI instantly understands your entire project structure
+code myproject  # Cursor reads .cursor-context automatically
+```
+
+**Claude/ChatGPT**:
+```bash
+qstack ai-context  # Copy output to AI tool for full context
+```
+
+**Any AI Tool**:
+- Standardized context format across all QStack projects
+- Self-documenting architecture and patterns
+- Consistent command structure and workflows
+
+### 🔄 Dynamic Context Updates
+Context files automatically include:
+- Current project structure and components
+- All Django models and React components  
+- Database schema and relationships
+- Available API endpoints and routes
+- Custom AI-generated features (when using `--ai`)
 
 ### English-First Documentation
-The `defineprojectscope.md` file uses simple English that AI tools can easily parse:
+Traditional `defineprojectscope.md` plus enhanced AI context:
 
 ```markdown
-## Next Steps
-- Add user authentication
-- Implement todo categories  
-- Add due dates for todos
-
-## Instructions for AI
-Use simple English to describe new features.
-Update status when implementing features.
+## 🤖 AI Assistant Instructions
+When working on this project:
+1. Always check .qstack-context.md first
+2. Follow established QStack patterns
+3. Use predefined commands from context
+4. Update context when adding features
 ```
 
 ### Modern Stack Recognition
-AI tools work best with:
-- ✅ React hooks and modern patterns
-- ✅ Tailwind CSS utility classes
-- ✅ Django REST Framework
+AI tools work perfectly with QStack's standardized:
+- ✅ React hooks and functional components
+- ✅ Tailwind CSS utility-first approach
+- ✅ Django REST Framework patterns
 - ✅ Docker containerization
-
-### Consistent Patterns
-- Clear file organization
-- Predictable naming conventions
-- Standard project structure
-- Well-commented configuration
+- ✅ Consistent file organization
 
 ## 🔧 Customization
 
@@ -244,43 +313,53 @@ Generated projects work out-of-the-box with:
 
 ## 📈 Roadmap
 
-### Phase 1 (Current)
+### Phase 1 (Completed ✅)
 - ✅ Basic project generation
-- ✅ Multiple database support
+- ✅ Multiple database support  
 - ✅ AI-friendly documentation
 - ✅ Docker containerization
+- ✅ **AI-native context system**
+- ✅ **Cursor IDE integration**
+- ✅ **AI context commands**
+- ✅ **AI-powered project generation**
 
 ### Phase 2 (Coming Soon)
+- [ ] Enhanced AI feature generation
 - [ ] Template marketplace
 - [ ] One-click deployment
 - [ ] GitHub integration
 - [ ] Custom templates
+- [ ] AI code analysis and suggestions
 
 ### Phase 3 (Future)
-- [ ] AI-powered feature generation
-- [ ] Real-time collaboration
-- [ ] VSCode extension
+- [ ] Real-time AI collaboration
+- [ ] VSCode extension with AI context
 - [ ] Web UI dashboard
+- [ ] AI-powered testing generation
+- [ ] Cross-project context sharing
 
 ## 🌟 Why QStack Will Trend
 
-### The Vibe Economy is Here
-- AI coding assistants are mainstream
-- Developers need AI-readable projects
-- Speed matters more than ever
-- English-driven development is the future
+### The AI-Native Future is Here
+- **AI coding assistants are mainstream** - QStack projects work perfectly with them
+- **Context switching kills productivity** - QStack eliminates it with AI-native architecture
+- **Speed matters more than ever** - AI + QStack = instant development
+- **English-driven development** - Natural language to production code
 
 ### Technical Advantages
-- Modern stack with latest tools
-- Production-ready from day one
-- Consistent, predictable patterns
-- Extensible and customizable
+- **AI-native by design** - Every project includes comprehensive AI context
+- **Modern stack with latest tools** - React, Django, Docker, Tailwind
+- **Production-ready from day one** - No configuration needed
+- **Consistent, predictable patterns** - AI tools understand immediately
+- **Cursor IDE integration** - Open and start coding with full context
+- **Cross-project consistency** - Same patterns across all QStack apps
 
 ### Market Timing
-- Perfect intersection of AI + web development
-- Addresses real pain points
-- Built for the next generation of developers
-- Scales from solo projects to teams
+- **Perfect intersection of AI + web development** 
+- **Addresses real pain points** - Context switching, setup time, AI integration
+- **Built for the next generation of vibecoders**
+- **Scales from solo projects to enterprise teams**
+- **AI tools need standardized project structures** - QStack provides them
 
 ---
 

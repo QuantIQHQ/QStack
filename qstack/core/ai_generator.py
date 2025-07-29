@@ -15,7 +15,7 @@ class AIProjectGenerator(ProjectGenerator):
         # Use analysis results for configuration
         super().__init__(
             project_name=project_name,
-            template=ai_analysis.template_type,
+            template_type=ai_analysis.template_type,
             database=ai_analysis.database_type
         )
         self.ai_analysis = ai_analysis
@@ -34,6 +34,28 @@ class AIProjectGenerator(ProjectGenerator):
         self._update_package_dependencies()
         self._generate_ai_documentation()
         self._update_urls_and_views()
+    
+    def _generate_ai_context(self, project_path, context):
+        """Override parent method to include AI-specific context."""
+        from datetime import datetime
+        
+        # Enhance context with AI-specific data
+        ai_context = context.copy()
+        ai_context.update({
+            'generation_timestamp': datetime.now().isoformat(),
+            'qstack_version': '0.1.0',
+            'ai_generated': True,
+            'original_description': getattr(self.ai_analysis, 'original_description', None),
+            'ai_analysis': self.ai_analysis,
+            'custom_models': self.custom_models,
+            'custom_components': self.custom_components
+        })
+        
+        # Generate main QStack context file with AI data
+        self._render_template('qstack-context.md.j2', project_path / '.qstack-context.md', ai_context)
+        
+        # Generate enhanced Cursor IDE context file
+        self._generate_cursor_context(project_path, ai_context)
     
     def _extract_models(self) -> Dict[str, Dict]:
         """Extract Django models from AI analysis."""
@@ -147,7 +169,8 @@ class AIProjectGenerator(ProjectGenerator):
         
         # Create custom models.py
         models_content = self._create_models_file()
-        models_path = os.path.join(self.project_dir, 'backend', f'{self.project_name_snake}', 'models.py')
+        project_name_snake = self.project_name.replace('-', '_')
+        models_path = os.path.join(self.project_name, 'backend', f'{project_name_snake}', 'models.py')
         
         with open(models_path, 'w') as f:
             f.write(models_content)
@@ -194,7 +217,7 @@ from django.contrib.auth.models import User
         if not self.custom_components:
             return
         
-        components_dir = os.path.join(self.project_dir, 'frontend', 'src', 'components')
+        components_dir = os.path.join(self.project_name, 'frontend', 'src', 'components')
         
         for component_name, component_data in self.custom_components.items():
             component_content = self._create_component_file(component_name, component_data)
@@ -234,7 +257,7 @@ export default {component_name};
         if not self.additional_packages:
             return
         
-        package_json_path = os.path.join(self.project_dir, 'frontend', 'package.json')
+        package_json_path = os.path.join(self.project_name, 'frontend', 'package.json')
         
         try:
             with open(package_json_path, 'r') as f:
@@ -285,7 +308,7 @@ export default {component_name};
 This project was generated using QStack AI with Claude analysis. The structure and features were automatically detected from your natural language description.
 
 ### Next Steps
-1. Review the generated models in `backend/{self.project_name_snake}/models.py`
+1. Review the generated models in `backend/{self.project_name.replace('-', '_')}/models.py`
 2. Check the React components in `frontend/src/components/`
 3. Run migrations: `docker-compose exec backend python manage.py makemigrations`
 4. Run migrations: `docker-compose exec backend python manage.py migrate`
@@ -299,7 +322,7 @@ This project was generated using QStack AI with Claude analysis. The structure a
 Generated with ❤️ by QStack AI - Powered by Claude
 """
         
-        ai_doc_path = os.path.join(self.project_dir, 'AI_ANALYSIS.md')
+        ai_doc_path = os.path.join(self.project_name, 'AI_ANALYSIS.md')
         with open(ai_doc_path, 'w') as f:
             f.write(ai_doc_content)
     

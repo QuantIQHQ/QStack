@@ -1,0 +1,272 @@
+# 🚀 {{ project_name }} - QStack Project Context
+
+> **AI-Readable Project Documentation** - Everything an AI needs to understand this project
+
+## 📋 Project Metadata
+- **Project Name**: `{{ project_name }}`
+- **Type**: `{{ template_type }}`
+- **Database**: `{{ database }}`
+- **Generated**: `{{ generation_timestamp }}`
+- **QStack Version**: `{{ qstack_version }}`
+{% if ai_generated %}
+- **AI Generated**: ✅ Claude-powered
+- **Original Description**: "{{ original_description }}"
+{% endif %}
+
+## 🏗️ Architecture Overview
+```
+{{ project_name }}/
+{% if template_type == 'fullstack' %}
+├── frontend/              # React + Vite + Tailwind CSS 4.0
+│   ├── src/
+│   │   ├── App.jsx        # Main application component
+│   │   ├── components/    # Reusable UI components
+│   │   └── main.jsx       # Application entry point
+│   ├── package.json       # Frontend dependencies
+│   └── Dockerfile         # Frontend container config
+├── backend/               # Django + REST Framework
+│   ├── {{ project_name_snake }}_project/  # Django project settings
+│   ├── todos/             # Main Django app
+│   │   ├── models.py      # Database models
+│   │   ├── views.py       # API endpoints
+│   │   └── serializers.py # Data serialization
+│   ├── requirements.txt   # Python dependencies
+│   └── Dockerfile         # Backend container config
+├── docker-compose.yml     # Multi-container orchestration
+{% elif template_type == 'frontend-only' %}
+├── src/
+│   ├── App.jsx            # Main application component
+│   ├── components/        # Reusable UI components
+│   └── main.jsx           # Application entry point
+├── package.json           # Dependencies and scripts
+└── vite.config.js         # Vite configuration
+{% elif template_type == 'api-only' %}
+├── {{ project_name_snake }}_project/  # Django project settings
+├── todos/                 # Main Django app
+│   ├── models.py          # Database models
+│   ├── views.py           # API endpoints
+│   └── serializers.py     # Data serialization
+├── requirements.txt       # Python dependencies
+├── docker-compose.yml     # Container orchestration
+└── Dockerfile             # Backend container config
+{% endif %}
+├── README.md              # Human-readable documentation
+├── defineprojectscope.md  # AI-friendly project scope
+└── .qstack-context.md     # THIS FILE - AI project context
+```
+
+## 🔧 Tech Stack Encoding
+{% if template_type == 'fullstack' or template_type == 'frontend-only' %}
+**Frontend Framework**: React 18.2+ with modern hooks pattern
+**Build Tool**: Vite 4+ for fast HMR and building
+**Styling**: Tailwind CSS 4.0 with utility-first approach
+**Package Manager**: npm (check package.json for exact versions)
+{% endif %}
+
+{% if template_type == 'fullstack' or template_type == 'api-only' %}
+**Backend Framework**: Django 4.2+ with REST Framework
+**Database**: {{ database|title }} {% if database == 'postgres' %}15+{% elif database == 'mysql' %}8+{% elif database == 'sqlite' %}(file-based){% endif %}
+**API Style**: RESTful API with DRF serializers
+**Authentication**: Django's built-in auth system
+{% endif %}
+
+{% if template_type == 'fullstack' or template_type == 'api-only' %}
+**Containerization**: Docker + docker-compose
+**Development Ports**: 
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8000
+- Database: localhost:5432 (postgres) / 3306 (mysql)
+{% endif %}
+
+{% if ai_generated and ai_analysis %}
+## 🤖 AI-Detected Features
+{% for feature in ai_analysis.features %}
+### {{ feature.name.replace('_', ' ').title() }}
+**Description**: {{ feature.description }}
+**Models**: {% if feature.models %}{{ feature.models|join(', ') }}{% else %}None detected{% endif %}
+**Components**: {% if feature.components %}{{ feature.components|join(', ') }}{% else %}None detected{% endif %}
+**API Endpoints**: {% if feature.api_endpoints %}{{ feature.api_endpoints|join(', ') }}{% else %}Auto-generated{% endif %}
+
+{% endfor %}
+{% endif %}
+
+## 📊 Database Schema Quick Reference
+{% if template_type == 'fullstack' or template_type == 'api-only' %}
+```python
+# Primary Models (check backend/{{ project_name_snake }}/models.py for full definitions)
+{% if ai_generated and custom_models %}
+{% for model_name, model_data in custom_models.items() %}
+{{ model_name }}:
+{% for field_name, field_type in model_data.fields.items() %}
+  - {{ field_name }}: {{ field_type.split('(')[0] }}
+{% endfor %}
+
+{% endfor %}
+{% else %}
+# Standard QStack models
+Todo:
+  - title: CharField(max_length=200)
+  - description: TextField 
+  - is_completed: BooleanField
+  - created_at: DateTimeField
+  - updated_at: DateTimeField
+{% endif %}
+```
+
+**Relationships**: 
+- All models include `created_at` and `updated_at` timestamps
+- Foreign keys follow Django naming: `model_id` or `model`
+- Many-to-many relationships use through tables when needed
+{% endif %}
+
+## 🎨 Frontend Component Architecture
+{% if template_type == 'fullstack' or template_type == 'frontend-only' %}
+```jsx
+// Component Hierarchy (check frontend/src/components/)
+App.jsx                    // Root application component
+├── TodoList.jsx          // Main todo display component
+├── TodoItem.jsx          // Individual todo item
+├── TodoForm.jsx          // Add/edit todo form
+{% if ai_generated and custom_components %}
+{% for component_name in custom_components.keys() %}
+├── {{ component_name }}.jsx     // {{ custom_components[component_name].description }}
+{% endfor %}
+{% endif %}
+└── Layout/               // Common layout components
+    ├── Header.jsx
+    └── Footer.jsx
+```
+
+**Styling Patterns**:
+- Tailwind utility classes for all styling
+- Responsive design with mobile-first approach
+- Dark mode support via CSS variables
+- Component composition over inheritance
+{% endif %}
+
+## 🛠️ Development Commands
+
+### Quick Start
+```bash
+cd {{ project_name }}
+{% if template_type == 'fullstack' or template_type == 'api-only' %}
+qstack up --build          # Start all services with build
+{% else %}
+npm install                # Install dependencies
+npm run dev                # Start development server
+{% endif %}
+```
+
+### QStack Commands
+```bash
+qstack up                  # Start development environment
+qstack up --build          # Start with fresh build
+qstack down                # Stop all services
+qstack logs                # View application logs
+qstack logs --follow       # Follow log output
+qstack status              # Check feature implementation status
+qstack build               # Prepare for production
+```
+
+{% if template_type == 'fullstack' or template_type == 'api-only' %}
+### Django Management
+```bash
+# Run inside backend container:
+docker exec -it {{ project_name }}_backend_1 python manage.py makemigrations
+docker exec -it {{ project_name }}_backend_1 python manage.py migrate
+docker exec -it {{ project_name }}_backend_1 python manage.py shell
+docker exec -it {{ project_name }}_backend_1 python manage.py createsuperuser
+```
+{% endif %}
+
+## 🤖 AI Assistant Instructions
+
+### For Claude/ChatGPT/Cursor
+When working on this {{ project_name }} project:
+
+1. **Always Reference This File**: Check `.qstack-context.md` first for project understanding
+2. **Follow QStack Patterns**: Use established conventions from similar QStack projects
+3. **Use Predefined Commands**: Stick to the commands listed above
+4. **Update Context**: When adding features, update this file accordingly
+
+### Code Patterns to Follow
+{% if template_type == 'fullstack' or template_type == 'frontend-only' %}
+**React Components**:
+- Functional components with hooks
+- Props destructuring in function parameters
+- Tailwind for all styling
+- JSX with semantic HTML elements
+
+```jsx
+const ComponentName = ({ prop1, prop2 }) => {
+  const [state, setState] = useState(initialValue);
+  
+  return (
+    <div className="p-4 bg-white rounded-lg shadow">
+      {/* Component content */}
+    </div>
+  );
+};
+```
+{% endif %}
+
+{% if template_type == 'fullstack' or template_type == 'api-only' %}
+**Django Models**:
+- Include `created_at` and `updated_at` fields
+- Use descriptive `verbose_name` in Meta class
+- Implement `__str__` method for admin display
+
+```python
+class ModelName(models.Model):
+    title = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = "Model Name"
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return self.title
+```
+
+**API Views**:
+- Use DRF ViewSets for CRUD operations
+- Include proper serializers
+- Add permission classes as needed
+{% endif %}
+
+### Adding New Features
+1. **Models**: Add to `backend/{{ project_name_snake }}/models.py`
+2. **API**: Create serializers and viewsets
+3. **Frontend**: Create components in `frontend/src/components/`
+4. **Routes**: Update URL patterns
+5. **Context**: Update this file with new feature info
+
+## 🔄 Auto-Generated Files
+{% if ai_generated %}
+**This project was AI-generated**. The following files contain AI-generated code:
+- `AI_ANALYSIS.md` - Detailed AI analysis and feature breakdown
+{% if custom_models %}
+- `backend/{{ project_name_snake }}/models.py` - Custom Django models
+{% endif %}
+{% if custom_components %}
+{% for component_name in custom_components.keys() %}
+- `frontend/src/components/{{ component_name }}.jsx` - AI-generated component
+{% endfor %}
+{% endif %}
+{% endif %}
+
+## 📚 Resources & Links
+- **QStack Documentation**: [GitHub Repository](https://github.com/QuantIQHQ/QStack)
+- **Django Documentation**: https://docs.djangoproject.com/
+- **React Documentation**: https://react.dev/
+- **Tailwind CSS**: https://tailwindcss.com/docs
+- **Vite Documentation**: https://vitejs.dev/
+
+---
+
+🤖 **Generated by QStack {{ qstack_version }}** - Modern Fullstack Generator by QuantIQ  
+📅 **Last Updated**: {{ generation_timestamp }}
+
+*This context file is automatically maintained. Do not edit manually - regenerate using `qstack generate-context`*

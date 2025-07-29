@@ -54,6 +54,7 @@ def main(ctx, no_banner):
 from .commands.up import up
 from .commands.down import down
 from .commands.logs import logs
+from .commands.ai_context import ai_context, ai_help, add_feature, generate_context
 
 # Register commands
 main.add_command(startproject)
@@ -62,6 +63,12 @@ main.add_command(build)
 main.add_command(up)
 main.add_command(down)
 main.add_command(logs)
+
+# Register AI context commands
+main.add_command(ai_context, name='ai-context')
+main.add_command(ai_help, name='ai-help')
+main.add_command(add_feature, name='add-feature')
+main.add_command(generate_context, name='generate-context')
 
 if __name__ == "__main__":
     main()
