@@ -1,5 +1,6 @@
 """QStack CLI interface."""
 
+import sys
 import click
 from colorama import init, Fore, Style
 from .commands.startproject import startproject
@@ -23,16 +24,29 @@ def print_banner():
 """
     click.echo(banner)
 
-@click.group()
+class QStackGroup(click.Group):
+    def get_help(self, ctx):
+        """Override help to show banner first."""
+        # Check if --no-banner was passed in command line arguments
+        if '--no-banner' not in sys.argv:
+            print_banner()
+        return super().get_help(ctx)
+
+@click.group(cls=QStackGroup)
 @click.version_option(version="0.1.0")
 @click.option('--no-banner', is_flag=True, help='Skip the banner display')
-def main(no_banner):
+@click.pass_context
+def main(ctx, no_banner):
     """QStack - Modern fullstack project generator by QuantIQ for vibecoders.
     
     Create production-ready fullstack applications with React, Django, 
     Docker, and AI-friendly documentation in seconds.
     """
-    if not no_banner:
+    # Store no_banner in context for help display
+    ctx.params['no_banner'] = no_banner
+    
+    # Show banner for normal command execution (not help)
+    if ctx.invoked_subcommand is None and not no_banner:
         print_banner()
 
 # Import new commands
